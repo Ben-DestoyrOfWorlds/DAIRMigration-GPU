@@ -1,7 +1,12 @@
 #! /bin/bash -x
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
 
-sudo /etc/init.d/tvpnserver stop
-sudo systemctl stop lightdm.service
+/etc/init.d/x11-common stop
+systemctl stop lightdm.service
+/etc/init.d/tvpnserver stop
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -79,8 +84,7 @@ sudo rm -rf /root/NVIDIA*
 
 sudo apt-get clean
 
-sudo systemctl start lightdm.service
-sudo /etc/init.d/tvpnserver start
-
 #Ensure changes are written to disk
 sync
+
+reboot
