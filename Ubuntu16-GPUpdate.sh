@@ -1,6 +1,6 @@
 #! /bin/bash -x
 
-sudo systemctl disable lightdm.service
+sudo systemctl stop lightdm.service
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -78,7 +78,6 @@ sudo rm -rf /root/NVIDIA*
 
 sudo apt-get clean
 
-sudo systemctl enable lightdm.service
 sudo systemctl start lightdm.service
 
 #Ensure changes are written to disk
