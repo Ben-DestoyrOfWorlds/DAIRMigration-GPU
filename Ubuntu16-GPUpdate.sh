@@ -1,5 +1,6 @@
 #! /bin/bash -x
 
+sudo /etc/init.d/tvpnserver stop
 sudo systemctl stop lightdm.service
 
 export DEBIAN_FRONTEND=noninteractive
@@ -79,6 +80,7 @@ sudo rm -rf /root/NVIDIA*
 sudo apt-get clean
 
 sudo systemctl start lightdm.service
+sudo /etc/init.d/tvpnserver start
 
 #Ensure changes are written to disk
 sync
