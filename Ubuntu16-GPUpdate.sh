@@ -6,7 +6,7 @@ fi
 
 /etc/init.d/x11-common stop
 systemctl stop lightdm.service
-/etc/init.d/tvpnserver stop
+/etc/init.d/tvncserver stop
 
 export DEBIAN_FRONTEND=noninteractive
 
