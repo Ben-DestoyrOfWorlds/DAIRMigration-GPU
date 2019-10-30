@@ -153,23 +153,6 @@ EndSection
 EOF
 sudo chattr +i /etc/X11/xorg.conf
 
-# Configure VNC
-cd
-mkdir /home/ubuntu/.vnc
-cat <<EOF | tee /home/ubuntu/.vnc/xstartup.turbovnc
-/opt/VirtualGL/bin/vglrun startxfce4 &
-EOF
-
-chmod +x .vnc/xstartup.turbovnc
-touch /home/ubuntu/.vnc/passwd
-chown -R ubuntu: /home/ubuntu/.vnc
-sudo ln -s /etc/pam.d/passwd /etc/pam.d/turbovnc
-
-cat <<EOF | sudo tee /etc/sysconfig/tvncservers
-VNCSERVERS="1:ubuntu"
-VNCSERVERARGS[1]="-securitytypes unixlogin -pamsession -geometry 1240x900 -depth 24"
-EOF
-
 sudo update-rc.d tvncserver defaults
 sudo systemctl enable tvncserver
 
