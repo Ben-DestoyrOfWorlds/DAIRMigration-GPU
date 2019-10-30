@@ -1,0 +1,28 @@
+#! /bin/bash -x
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+yum groupinstall "Development Tools"
+yum install kernel-devel epel-release
+yum install dkms
+
+/etc/init.d/tvncserver stop
+systemctl isolate multi-user.target
+#killall xvnc
+
+chattr -i /etc/X11/xorg.conf
+
+# Install vGPU Driver
+# Install NVIDIA's 32-bit compatibility libraries?
+# An incomplete installation of libglvnd was found. Do you want to install a full copy of libglvnd? This will overwrite any existing libglvnd libraries.
+# Install x11 config
+echo " ====> Downloading vGPU Driver"
+wget -q https://swift-yyc.cloud.cybera.ca:8080/v1/AUTH_8c4974ed39a44c2fabd9d75895f6e28b/cybera_public/NVIDIA-GRID-Linux-KVM-410.92-410.91-412.16.zip
+unzip NVIDIA-GRID-Linux-KVM-410.92-410.91-412.16.zip
+chmod +x *.run
+
+
+
+chattr +i /etc/X11/xorg.conf
