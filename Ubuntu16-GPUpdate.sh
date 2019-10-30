@@ -155,18 +155,18 @@ sudo chattr +i /etc/X11/xorg.conf
 
 # Configure VNC
 cd
-mkdir .vnc
-cat <<EOF | tee .vnc/xstartup.turbovnc
+mkdir /home/ubuntu/.vnc
+cat <<EOF | tee /home/ubuntu/.vnc/xstartup.turbovnc
 /opt/VirtualGL/bin/vglrun startxfce4 &
 EOF
 
 chmod +x .vnc/xstartup.turbovnc
-touch .vnc/passwd
-chown -R $(whoami): .vnc
+touch /home/ubuntu/.vnc/passwd
+chown -R ubuntu: /home/ubuntu/.vnc
 sudo ln -s /etc/pam.d/passwd /etc/pam.d/turbovnc
 
 cat <<EOF | sudo tee /etc/sysconfig/tvncservers
-VNCSERVERS="1:$(whoami)"
+VNCSERVERS="1:ubuntu"
 VNCSERVERARGS[1]="-securitytypes unixlogin -pamsession -geometry 1240x900 -depth 24"
 EOF
 
@@ -176,16 +176,6 @@ sudo systemctl enable tvncserver
 # Use networkd instead of network manager
 sudo systemctl disable network-manager.service
 sudo systemctl enable systemd-networkd.service
-
-# Fix netplan so it can be properly rewritten on update
-cat <<EOF | sudo tee /etc/netplan/50-cloud-init.yaml
-network:
-    version: 2
-    ethernets:
-        ens3:
-            dhcp4: true
-EOF
-sudo netplan apply
 
 # Make xfce4 the default terminal as gnome-terminal doesn't work via VNC
 sudo update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
