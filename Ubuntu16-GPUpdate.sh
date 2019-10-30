@@ -79,15 +79,21 @@ EOF
 
 ldconfig
 
-# Clean up
-cd
-rm -rf cuda*
-rm -rf /root/NVIDIA*
-
-apt-get clean
-
 #Ensure changes are written to disk
 sync
+# This script is based on https://github.com/cybera/openstack-images/blob/6de2d7a91d05e8725823a13555a53aff4c9325f3/packer_files/UbuntuvGPU.sh
+
+sudo apt-get install -y xubuntu-desktop libglu1-mesa-dev libx11-dev freeglut3-dev mesa-utils dictionaries-common
+
+#TurboVNC and VirtualGL
+cd
+mkdir t
+pushd t
+wget -q https://sourceforge.net/projects/virtualgl/files/2.6.1/virtualgl_2.6.1_amd64.deb/download -O virtualgl_2.6.1_amd64.deb
+wget -q https://sourceforge.net/projects/turbovnc/files/2.2.1/turbovnc_2.2.1_amd64.deb/download -O turbovnc_2.2.1_amd64.deb
+sudo dpkg -i *.deb
+popd
+sudo rm -rf t
 
 sudo chmod +s /usr/lib/libdlfaker.so
 sudo chmod +s /usr/lib/libvglfaker.so
@@ -145,7 +151,7 @@ Section "Screen"
     EndSubSection
 EndSection
 EOF
-chattr +i /etc/X11/xorg.conf
+sudo chattr +i /etc/X11/xorg.conf
 
 # Configure VNC
 cd
@@ -170,5 +176,28 @@ sudo systemctl enable tvncserver
 # Use networkd instead of network manager
 sudo systemctl disable network-manager.service
 sudo systemctl enable systemd-networkd.service
+
+# Fix netplan so it can be properly rewritten on update
+cat <<EOF | sudo tee /etc/netplan/50-cloud-init.yaml
+network:
+    version: 2
+    ethernets:
+        ens3:
+            dhcp4: true
+EOF
+sudo netplan apply
+
+# Make xfce4 the default terminal as gnome-terminal doesn't work via VNC
+sudo update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
+
+
+# Clean up
+cd
+rm -rf cuda*
+rm -rf /root/NVIDIA*
+
+apt-get clean
+
+## You should reboot or start X now.
 
 reboot
