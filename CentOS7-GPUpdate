@@ -23,6 +23,8 @@ wget -q https://swift-yyc.cloud.cybera.ca:8080/v1/AUTH_8c4974ed39a44c2fabd9d7589
 unzip NVIDIA-GRID-Linux-KVM-410.92-410.91-412.16.zip
 chmod +x *.run
 
+./NVIDIA-Linux-x86_64-410.92-grid.run --dkms -as -k $(ls /boot | grep vmlinuz | head -n 1 | sed 's/vmlinuz-//')
+
 # Set up licensing
 mkdir -p /etc/nvidia
 cat << EOF | sudo tee /etc/nvidia/gridd.conf
