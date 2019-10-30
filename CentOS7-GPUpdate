@@ -25,6 +25,13 @@ chmod +x *.run
 
 ./NVIDIA-Linux-x86_64-410.92-grid.run --dkms -as -k $(ls /boot | grep vmlinuz | head -n 1 | sed 's/vmlinuz-//')
 
+# Cleanup NVIDIA
+# This may need to he adjusted as some folks keep data in their home folders.
+rm -rf *.pdf
+rm -rf *.exe
+rm -rf *.zip
+rm -rf *.run
+
 # Set up licensing
 mkdir -p /etc/nvidia
 cat << EOF | sudo tee /etc/nvidia/gridd.conf
