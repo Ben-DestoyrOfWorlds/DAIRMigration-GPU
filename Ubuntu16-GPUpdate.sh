@@ -87,6 +87,9 @@ EOF
 
 ldconfig
 
+nvidia-xconfig
+chattr +i /etc/X11/xorg.conf
+
 #Ensure changes are written to disk
 sync
 # This script is based on https://github.com/cybera/openstack-images/blob/6de2d7a91d05e8725823a13555a53aff4c9325f3/packer_files/UbuntuvGPU.sh
