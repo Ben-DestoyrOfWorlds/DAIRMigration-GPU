@@ -48,10 +48,18 @@ echo " ====> Installing vGPU Driver"
 ./NVIDIA-Linux-x86_64-410.92-grid.run --dkms -as -k $(uname -r)
 
 # Cleanup NVIDIA
-rm -rf *.pdf
-rm -rf *.exe
-rm -rf *.zip
-rm -rf *.run
+rm -f NVIDIA-GRID-Linux-KVM-410.92-410.91-412.16.zip
+rm -f  410.92-410.91-412.16-grid-license-server-release-notes.pdf  
+rm -f  410.92-410.91-412.16-grid-license-server-user-guide.pdf  
+rm -f  410.92-410.91-412.16-grid-licensing-user-guide.pdf  
+rm -f  410.92-410.91-412.16-grid-software-quick-start-guide.pdf  
+rm -f  410.92-410.91-412.16-grid-vgpu-oem-qualification-test-plan.pdf  
+rm -f  410.92-410.91-412.16-grid-vgpu-user-guide.pdf  
+rm -f  410.92-410.91-412.16-kvm-reference-platform-partner-guidelines.pdf  
+rm -f  412.16_grid_win10_server2016_64bit_international.exe  
+rm -f  412.16_grid_win8_win7_server2012R2_server2008R2_64bit_international.exe  
+rm -f  NVIDIA-Linux-x86_64-410.91-vgpu-kvm.run  
+rm -f  NVIDIA-Linux-x86_64-410.92-grid.run
 
 # Set up licensing
 mkdir -p /etc/nvidia
