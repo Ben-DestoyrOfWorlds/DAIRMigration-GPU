@@ -65,6 +65,8 @@ EOF
 
 sudo ldconfig
 
+nvidia-xconfig
+
 # Clean up
 chattr +i /etc/X11/xorg.conf
 
