@@ -8,6 +8,7 @@ yum update -y
 yum groupinstall -y "Development Tools"
 yum install -y kernel-devel epel-release
 yum install -y dkms
+yum install -y VirtualGL
 
 /etc/init.d/tvncserver stop
 systemctl isolate multi-user.target
