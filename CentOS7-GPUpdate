@@ -4,6 +4,7 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+yum update -y
 yum groupinstall -y "Development Tools"
 yum install -y kernel-devel epel-release
 yum install -y dkms
